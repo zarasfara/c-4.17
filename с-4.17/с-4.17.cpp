@@ -44,7 +44,7 @@ int main()
     /* 1 часть задачи начало */
 
     int count = 0; // Подсчет количества посылок, отправленных в г. Нижний Новгород
-    for (const Package package : packages) {
+    for (Package package : packages) {
         if (package.city == "Нижний Новгород") count++;
     }
     std::cout << "Отправлено посылок в г. Нижний Новгород: " << count << std::endl;
