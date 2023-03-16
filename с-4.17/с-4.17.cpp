@@ -44,7 +44,7 @@ int main()
     /* 1 часть задачи начало */
 
     int count = 0; // Подсчет количества посылок, отправленных в г. Нижний Новгород
-    for (Package package : packages) {
+    for (const Package& package : packages) {
         if (package.city == "Нижний Новгород") count++;
     }
     std::cout << "Отправлено посылок в г. Нижний Новгород: " << count << std::endl;
@@ -57,15 +57,15 @@ int main()
 
     // Создаем пустой map для подсчета количества посылок по городам
     std::map<std::string, int> package_counts; // string - название корода, int - количество посылок отправленных в городе с ценностью свыше 100
-        
+
     // Проходим по всем посылкам
-    for (Package package : packages) {
+    for (const Package& package : packages) {
         // Если ценность посылки больше 100, то увеличиваем счетчик для соответствующего города
         if (package.value > MINIMUM_VALUE) package_counts[package.city]++;
     }
 
     std::cout << "Посылки ценностью выше 100 рублей были отправлены в следующие города:\n";
-    for (auto [key, count] : package_counts) {
+    for (const auto& [key, count] : package_counts) {
         std::cout << "- " << key << ": " << count << " посылок\n";
     }
 
@@ -77,7 +77,7 @@ int main()
 
     std::map<std::string, int> address_counts;
 
-    for (Package package : packages) {
+    for (const Package& package : packages) {
         // Составляем полный адрес
         std::string address = package.city
             + ", " + package.street + ", " 
