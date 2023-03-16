@@ -37,9 +37,17 @@ int main()
 
         std::cout << "Введите город: ";
         std::cin >> packages[i].city;
+        if (packages[i].city.empty()) {
+            std::cout << "Город не указан\n";
+            return 1;
+        }
 
         std::cout << "Введите улицу: ";
         std::cin >> packages[i].street;
+        if (packages[i].street.empty()) {
+            std::cout << "Улица не указана\n";
+            return 1;
+        }
 
         std::cout << "Введите номер дома: ";
         std::cin >> packages[i].house_number;
@@ -57,6 +65,10 @@ int main()
 
         std::cout << "Введите имя получателя: ";
         std::cin >> packages[i].recipient;
+        if (packages[i].recipient.empty()) {
+            std::cout << "Получатель не указан\n";
+            return 1;
+        }
 
         std::cout << "Введите ценность посылки: ";
         std::cin >> packages[i].value;
