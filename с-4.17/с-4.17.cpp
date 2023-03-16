@@ -25,27 +25,52 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
 
-    // инициализация массива посылок
-    Package packages[] = {
-        {"Нижний Новгород", "Ленина", 1, 10, "Иванов", 100.0},
-        {"Москва", "Тверская", 5, 20, "Петров", 200.0},
+    std::cout << "Введите количество посылок: ";
+    int countItems;
+    std::cin >> countItems;
 
-        {"Нижний Новгород", "Московская", 10, 5, "Сидоров", 50.0},
-        {"Нижний Новгород", "Московская", 10, 5, "Сидоров", 150.0},
-        {"Нижний Новгород", "Московская", 10, 5, "Сидоров", 250.0},
-        {"Нижний Новгород", "Горького", 20, 15, "Смирнов", 150.0},
+    // Инициализация массива посылок
+    Package* packages = new Package[countItems];
 
-        {"Санкт-Петербург", "Невский", 15, 7, "Козлов", 300.0},
-        
-        {"Казань", "Кремлевская", 25, 8, "Васильев", 75.0},
-        {"Казань", "Кремлевская", 25, 8, "Васильев", 150.0}
-    };
+    for (int i = 0; i < countItems; ++i) {
+        std::cout << "\nПосылка #" << i + 1 << "\n";
+
+        std::cout << "Введите город: ";
+        std::cin >> packages[i].city;
+
+        std::cout << "Введите улицу: ";
+        std::cin >> packages[i].street;
+
+        std::cout << "Введите номер дома: ";
+        std::cin >> packages[i].house_number;
+        if (packages[i].house_number < 0) {
+            std::cout << "Некорректное значение номера дома\n";
+            return 1;
+        }
+
+        std::cout << "Введите номер квартиры: ";
+        std::cin >> packages[i].apartment_number;
+        if (packages[i].apartment_number < 0) {
+            std::cout << "Некорректное значение номера квартиры\n";
+            return 1;
+        }
+
+        std::cout << "Введите имя получателя: ";
+        std::cin >> packages[i].recipient;
+
+        std::cout << "Введите ценность посылки: ";
+        std::cin >> packages[i].value;
+        if (packages[i].value < 1) {
+            std::cout << "Минимальная ценность посылки " << 1 << " руб.\n";
+            return 1;
+        }
+    }
 
     /* 1 часть задачи начало */
 
     int count = 0; // Подсчет количества посылок, отправленных в г. Нижний Новгород
-    for (const Package& package : packages) {
-        if (package.city == "Нижний Новгород") count++;
+    for (int i = 0; i < countItems; ++i) {
+        if (packages[i].city == "Нижний Новгород") count++;
     }
     std::cout << "Отправлено посылок в г. Нижний Новгород: " << count << std::endl;
 
@@ -59,9 +84,9 @@ int main()
     std::map<std::string, int> package_counts; // string - название корода, int - количество посылок отправленных в городе с ценностью свыше 100
 
     // Проходим по всем посылкам
-    for (const Package& package : packages) {
+    for (int i = 0; i < countItems; ++i) {
         // Если ценность посылки больше 100, то увеличиваем счетчик для соответствующего города
-        if (package.value > MINIMUM_VALUE) package_counts[package.city]++;
+        if (packages[i].value > MINIMUM_VALUE) package_counts[packages[i].city]++;
     }
 
     std::cout << "Посылки ценностью выше 100 рублей были отправлены в следующие города:\n";
@@ -77,12 +102,12 @@ int main()
 
     std::map<std::string, int> address_counts;
 
-    for (const Package& package : packages) {
+    for (int i = 0; i < countItems; ++i) {
         // Составляем полный адрес
-        std::string address = package.city
-            + ", " + package.street + ", " 
-            + std::to_string(package.house_number)
-            + ", " + std::to_string(package.apartment_number);
+        std::string address = packages[i].city
+            + ", " + packages[i].street + ", "
+            + std::to_string(packages[i].house_number)
+            + ", " + std::to_string(packages[i].apartment_number);
 
         address_counts[address]++;
     }
