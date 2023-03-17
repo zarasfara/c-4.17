@@ -77,6 +77,7 @@ int main()
 
     std::map<std::string, int> address_counts;
 
+    // проходимся по всем адресам
     for (const Package& package : packages) {
         // Составляем полный адрес
         std::string address = package.city
@@ -84,13 +85,17 @@ int main()
             + std::to_string(package.house_number)
             + ", " + std::to_string(package.apartment_number);
 
+        // Используем функцию emplace для добавления элемента в map
+        address_counts.emplace(address, 0);
+
         address_counts[address]++;
     }
 
     bool found_duplicates = false;
 
+    // Вывод в консоль
     for (auto [address, count] : address_counts) {
-        if (count > 1) {
+        if (count > 1) { // Если у адреса<ключа> значение больше 1, тогда выводим в консоль
             std::cout << "Адресс: " << address << " получил " << count << " поссылки\n";
             found_duplicates = true;
         }
